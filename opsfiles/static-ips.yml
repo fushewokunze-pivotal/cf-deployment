@@ -1,18 +1,18 @@
 - type: replace
   path: /instance_groups/name=consul/networks/name=private/static_ips
   value: &consul_ips
-  - CONSUL_STATIC_IP_1
-  - CONSUL_STATIC_IP_2
-  - CONSUL_STATIC_IP_3
+  - 10.0.4.190
+  - 10.0.5.190
+  - 10.0.4.191
 - type: replace
   path: /instance_groups/name=nats/networks/name=private/static_ips
   value: &nats_ips
-  - NATS_STATIC_IP_1
-  - NATS_STATIC_IP_2
+  - 10.0.4.192
+  - 10.0.5.193
 - type: replace
   path: /instance_groups/name=mysql/networks/name=private/static_ips
   value:
-  - &mysql_ip MYSQL_STATIC_IP
+  - &mysql_ip  10.0.4.194
 
 
 # ---------------------------------------------------------------------------------------------
