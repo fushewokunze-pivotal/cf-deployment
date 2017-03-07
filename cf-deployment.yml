@@ -772,6 +772,7 @@ instance_groups:
         default_staging_security_groups: &cc_default_staging_security_groups
         - public_networks
         - dns
+        allow_app_ssh_access: true
         security_group_definitions: &cc_security_group_definitions
         - name: public_networks
           rules:
