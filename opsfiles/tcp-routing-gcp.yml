@@ -10,21 +10,32 @@
     vm_type: m3.medium
     stemcell: default
     vm_extensions:
-    - internet-required
+    - cf-internet-required
     - cf-tcp-router-network-properties
     networks:
     - name: private
     jobs:
     - name: consul_agent
       release: consul
-      consumes:
-        consul: {from: consul_server}
+      properties:
+        consul:
+          agent:
+            mode: client
+            domain: cf.internal
+            servers:
+              lan: *consul_machines
+          encrypt_keys:
+          - "((consul_encrypt_key))"
+          agent_cert: "((consul_agent.certificate))"
+          agent_key: "((consul_agent.private_key))"
+          ca_cert: "((consul_agent.ca))"
+          server_cert: "((consul_server.certificate))"
+          server_key: "((consul_server.private_key))"
     - name: tcp_router
       release: routing
       properties:
         tcp_router:
           oauth_secret: "((uaa_clients_tcp_router_secret))"
-          health_check_port: 8080
         uaa:
           ca_cert: "((uaa_ca.certificate))"
           tls_port: 8443
@@ -42,10 +53,13 @@
           shared_secret: "((dropsonde_shared_secret))"
         loggregator:
           tls:
-            ca_cert: "((loggregator_tls_metron.ca))"
-            metron:
-              cert: "((loggregator_tls_metron.certificate))"
-              key: "((loggregator_tls_metron.private_key))"
+            ca_cert: "((loggregator_ca.certificate))"
+            trafficcontroller:
+              cert: "((loggregator_tls_tc.certificate))"
+              key: "((loggregator_tls_tc.private_key))"
+            doppler:
+              cert: "((loggregator_tls_doppler.certificate))"
+              key: "((loggregator_tls_doppler.private_key))"
           etcd:
             require_ssl: true
             ca_cert: "((etcd_server.ca))"
@@ -62,15 +76,30 @@
     instances: 2
     vm_type: m3.medium
     vm_extensions:
-    - internet-required
+    - cf-internet-required
     stemcell: default
     networks:
     - name: private
     jobs:
     - name: consul_agent
       release: consul
-      consumes:
-        consul: {from: consul_server}
+      properties:
+        consul:
+          agent:
+            mode: client
+            domain: cf.internal
+            servers:
+              lan: &consul_machines
+              - 10.0.1.194
+              - 10.0.1.195
+              - 10.0.1.196
+          encrypt_keys:
+          - "((consul_encrypt_key))"
+          agent_cert: "((consul_agent.certificate))"
+          agent_key: "((consul_agent.private_key))"
+          ca_cert: "((consul_agent.ca))"
+          server_cert: "((consul_server.certificate))"
+          server_key: "((consul_server.private_key))"
     - name: tcp_emitter
       release: routing
       properties:
@@ -81,7 +110,7 @@
             client_key: "((diego_bbs_client.private_key))"
         bbs:
           api_location: bbs.service.cf.internal:8889
-          ca_cert: "((diego_bbs_client.ca))"
+          ca_cert: "((diego_bbs.ca))"
         uaa:
           ca_cert: "((uaa_ca.certificate))"
           tls_port: 8443
@@ -103,7 +132,7 @@
           reservable_ports: 1024-1123
         sqldb:
           type: mysql
-          host: 10.0.31.193
+          host: 10.0.1.193
           port: 3306
           schema: routing-api
           username: routing-api
@@ -137,10 +166,6 @@
   path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/routing_api?
   value:
     enabled: true
-
-- type: replace
-  path: /instance_groups/name=api/jobs/name=cloud_controller_ng/properties/ssl?/skip_cert_verify
-  value: true
 
 - type: replace
   path: /instance_groups/name=api/jobs/name=consul_agent/properties/consul/agent/services/routing-api?
