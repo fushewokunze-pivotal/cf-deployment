@@ -6,6 +6,7 @@ update:
   max_in_flight: 5
   serial: false
   update_watch_time: 5000-1200000
+
 instance_groups:
 - name: consul
   azs:
