@@ -22,9 +22,9 @@ instance_groups:
   networks:
   - name: private
     static_ips: &consul_ips
-    - 10.0.31.190
-    - 10.0.47.190
-    - 10.0.63.190
+    - 10.0.4.190
+    - 10.0.5.190
+    - 10.0.6.190
   jobs:
   - name: consul_agent
     release: consul
@@ -77,8 +77,8 @@ instance_groups:
   networks:
   - name: private
     static_ips: &nats_machines
-    - 10.0.31.191
-    - 10.0.47.191
+    - 10.0.4.191
+    - 10.0.5.191
   jobs:
   - name: consul_agent
     release: consul
@@ -189,7 +189,7 @@ instance_groups:
   networks:
   - name: private
     static_ips:
-    - 10.0.31.193
+    - 10.0.4.193
   jobs:
   - name: consul_agent
     release: consul
@@ -232,7 +232,7 @@ instance_groups:
             password: "((cf_mysql_mysql_seeded_databases_diego_password))"
           database_startup_timeout: 600
           cluster_ips:
-          - 10.0.31.193
+          - 10.0.4.193
   - name: metron_agent
     release: loggregator
     properties: *metron_agent_properties
@@ -322,7 +322,7 @@ instance_groups:
           - label: key-2016-06
             passphrase: "((diego_bbs_encryption_keys_passphrase))"
           sql:
-            db_host: 10.0.31.193
+            db_host: 10.0.4.193
             db_port: 3306
             db_schema: diego
             db_username: diego
@@ -452,7 +452,7 @@ instance_groups:
             authorized-grant-types: client_credentials,refresh_token
             secret: "((uaa_clients_tcp_router_secret))"
       uaadb:
-        address: 10.0.31.193
+        address: 10.0.4.193
         databases:
         - name: uaa
           tag: uaa
@@ -857,7 +857,7 @@ instance_groups:
         databases:
         - name: cloud_controller
           tag: cc
-        address: 10.0.31.193
+        address: 10.0.4.193
         db_scheme: mysql
         port: 3306
         roles:
