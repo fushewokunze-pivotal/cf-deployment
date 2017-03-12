@@ -756,7 +756,8 @@ instance_groups:
       app_domains: &app_domains
       - "((system_domain))"
       app_ssh: &app_ssh
-        host_key_fingerprint: "((diego_ssh_proxy_host_key.public_key_fingerprint))"
+        #host_key_fingerprint: "((diego_ssh_proxy_host_key.public_key_fingerprint))"
+        host_key_fingerprint: "55:ad:e6:a8:fd:70:6f:89:2d:0f:af:37:41:1c:c2:8c"
         oauth_client_id: ssh-proxy
       nats:
         machines: *nats_machines
