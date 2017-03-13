@@ -29,6 +29,10 @@ instance_groups:
   jobs:
   - name: consul_agent
     release: consul
+    consumes:
+      consul: {from: consul_server}
+    provides:
+      consul: {as: consul_server}
     properties:
       consul:
         agent:
