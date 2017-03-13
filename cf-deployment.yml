@@ -1514,6 +1514,12 @@ variables:
     extended_key_usage:
     - client_auth
 
+- name: ipsec
+  type: certificate
+  options:
+    is_ca: true
+   common_name: ipsecCA
+
 releases:
 - name: binary-buildpack
   url: https://bosh.io/d/github.com/cloudfoundry/binary-buildpack-release?v=1.0.9
