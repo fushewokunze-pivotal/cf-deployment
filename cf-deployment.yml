@@ -1513,12 +1513,11 @@ variables:
     common_name: tps_watcher
     extended_key_usage:
     - client_auth
-
 - name: ipsec
   type: certificate
   options:
     is_ca: true
-   common_name: ipsecCA
+    common_name: ipsecCA
 
 releases:
 - name: binary-buildpack
