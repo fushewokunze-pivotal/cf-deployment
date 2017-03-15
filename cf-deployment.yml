@@ -658,7 +658,7 @@ instance_groups:
 - name: blobstore
   azs:
   - z1
-  instances: 2
+  instances: 1
   vm_type: m3.large
   vm_extensions:
   - 100GB_ephemeral_disk
