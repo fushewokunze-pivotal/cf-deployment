@@ -1481,9 +1481,9 @@ variables:
     alternative_names:
     - "((system_domain))"
     - "*.((system_domain))"
-    - uaa."((system_domain))"
+    - "uaa.((system_domain))"
     - "*.uaa.((system_domain))"
-    - login."((system_domain))"
+    - "login.((system_domain))"
     - "*.login.((system_domain))"
     
 - name: uaa_ca
