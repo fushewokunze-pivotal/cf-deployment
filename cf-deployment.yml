@@ -270,8 +270,7 @@ instance_groups:
     release: routing
     properties:
       router:
-        #enable_ssl: true
-        enable_ssl: false
+        enable_ssl: true
         ssl_cert: "((router_ssl.certificate))"
         ssl_key: "((router_ssl.private_key))"
         status:
@@ -1477,7 +1476,7 @@ variables:
 - name: router_ssl
   type: certificate
   options:
-    ca: router_ca
+    #ca: router_ca
     common_name: routerSSL
     alternative_names:
     - "((system_domain))"
